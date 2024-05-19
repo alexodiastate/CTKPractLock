@@ -1,0 +1,63 @@
+import customtkinter as ctk
+
+root = ctk.CTk()
+root.title("Lock Simulator")
+root.geometry("400x300")
+
+#checks to see if the change in digit is legal, then changes it
+def change_text_pos(label,num):
+    curr = (int)(label.cget("text"))
+    if(num + curr == 10):
+        return
+    elif(num + curr == -1):
+        return
+    else:
+        label.configure(text = curr+num)
+
+#checks the locks to see if they are correct, then opens if they are
+def test_locks():
+    #changes the dials into a full number
+    num = ((int)(digit1.cget("text")) * 100) + ((int)(digit2.cget("text")) * 10)+ (int)(digit3.cget("text"))
+    if(num == 777):
+        status.configure(text="OPEN",text_color="Green")
+
+# labels to display the 3 dials
+digit1 = ctk.CTkLabel(root, text=0, font=("Arial", 20),fg_color="Grey",text_color="White",width=40,height=100)
+digit1.place(x=60,y=75)
+
+digit2 = ctk.CTkLabel(root, text=0, font=("Arial", 20),fg_color="Grey",text_color="White",width=40,height=100)
+digit2.place(x=110,y=75)
+
+digit3 = ctk.CTkLabel(root, text=0, font=("Arial", 20),fg_color="Grey",text_color="White",width=40,height=100)
+digit3.place(x=160,y=75)
+
+# buttons that go up and down
+digit1plus = ctk.CTkButton(root, text="+",command=lambda:change_text_pos(digit1,1),font=("Arial", 12), width=35,height=35)
+digit1plus.place(x=63.5,y=30)
+
+digit1min = ctk.CTkButton(root, text="-", command=lambda:change_text_pos(digit1,-1),font=("Arial", 12),width=35,height=35)
+digit1min.place(x=63.5,y=185)
+#2
+digit2plus = ctk.CTkButton(root, text="+",command=lambda:change_text_pos(digit2,1),font=("Arial", 12), width=35,height=35)
+digit2plus.place(x=113.5,y=30)
+
+digit2min = ctk.CTkButton(root, text="-", command=lambda:change_text_pos(digit2,-1),font=("Arial", 12),width=35,height=35)
+digit2min.place(x=113.5,y=185)
+#3
+digit3plus = ctk.CTkButton(root, text="+",command=lambda:change_text_pos(digit3,1),font=("Arial", 12), width=35,height=35)
+digit3plus.place(x=163.5,y=30)
+
+digit3min = ctk.CTkButton(root, text="-", command=lambda:change_text_pos(digit3,-1),font=("Arial", 12),width=35,height=35)
+digit3min.place(x=163.5,y=185)
+
+
+#button to check if locks are correct
+checkButton = ctk.CTkButton(root, text="OPEN", command=test_locks,font=("Arial", 24),width=70,height=70)
+checkButton.place(x=300,y=50)
+
+#open / closed status
+status = ctk.CTkLabel(root, text="LOCKED", font=("Arial", 20),fg_color="Grey",text_color="Red",width=70,height=30)
+status.place(x=300,y=150)
+
+# Run the application
+root.mainloop()
